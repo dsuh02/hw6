@@ -91,9 +91,26 @@ std::set<std::string> boggle(const std::set<std::string>& dict, const std::set<s
 	return result;
 }
 
-bool boggleHelper(const std::set<std::string>& dict, const std::set<std::string>& prefix, const std::vector<std::vector<char> >& board, 
-								   std::string word, std::set<std::string>& result, unsigned int r, unsigned int c, int dr, int dc)
+bool boggleHelper(const std::set<std::string>& dict,const std::set<std::string>& prefix, const std::vector<std::vector<char> >& board, 
+								   std::string word,std::set<std::string>& result, unsigned int r, unsigned int c, int dr, int dc)
 {
-//add your solution here!
+  //add your solution here!
+  if(c>=board[r].size()) { 
+		return 0;
+	}
+  if(r>=board.size()){
+    return 0;
+  }
 
+	word+=board[r][c]; 
+	if(!(boggleHelper(dict,prefix,board,word,result,r+dr,c+dc,dr,dc)) 
+      &&(dict.count(word)!=0)){
+		result.insert(word); 
+		return 1;
+	}  
+	if(0 ==prefix.count(word)){ 
+		return 0;
+	}
+  // recursive call
+	return boggleHelper(dict,prefix,board,word,result,r+dr,c+dc,dr,dc);
 }
